@@ -20,7 +20,7 @@ class PedidoController extends Controller
             if ($this->existeEstoque($produtoId)) {
                 continue;
             } else {
-                return 'Não existe estoque';
+                return response()->json(['message' => 'Não existe estoque'], 400);
             }
         }
 
@@ -34,6 +34,11 @@ class PedidoController extends Controller
         $id = $pedido->save();
 
         $this->insertProdutos($request->produtos, $pedido->id);
+
+        return response()->json([
+            'message' => 'Sucesso!',
+            200
+        ]);
     }
 
     public function show($id)
@@ -114,7 +119,7 @@ class PedidoController extends Controller
     }
 
     private function existeEstoque($produtoId) {
-        $produto = Produto::findOrFail($produtoId);
+        $produto = Produto::findOrFail((int)$produtoId);
 
         return (int)$produto->quantidadeEstoque == 0 ? false : true;
     }
