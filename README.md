@@ -1,4 +1,5 @@
-# coopersystem-php
+# Projeto: Coopersystem PHP
+
 
 ## Teste Desenvolvedor
 Desenvolver o fluxo de pedido de um produto de acordo com os seguintes critérios:
@@ -37,3 +38,39 @@ Disponibilizar o código fonte no GitHub com instruções de configuração.
 * Testes unitários;
 * Utilizar InfyOm - http://labs.infyom.com (ou semelhante);
 * Seguir o padrão de commits do Git Flow;
+
+
+## Instalação
+### Pre requisitos:
+* Docker 18+
+* docker-compose 1.22+
+* php 7.2
+* Linux (não efetuei teste no windows, mas acho que o docker vai dar conta de subir)
+
+ Clonar projeto:
+```
+$ git clone https://github.com/wouerner/coopersystem-php.git
+```
+Dentro da pasta do projeto:
+```
+cd coopersystem-php/
+chmod +x artisan
+```
+Instalando migrações e criando as tabelas:
+```
+./artisan migrate:install
+./artisan migrate
+```
+Iniciando o banco de dados
+```
+docker-compose up
+```
+Iniciando a aplicação backend
+
+```
+./artisan serve
+```
+Acessar no navegador: localhost:8000
+
+
+
