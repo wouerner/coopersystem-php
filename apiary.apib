@@ -1,80 +1,186 @@
 FORMAT: 1A
 HOST: http://polls.apiblueprint.org/
 
-# coopersystem-php
+# Coopersystem PHP
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+## Produto [/api/produto]
 
-## Questions Collection [/questions]
-
-### List All Questions [GET]
+### Produto Listar [GET]
 
 + Response 200 (application/json)
 
         [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
+         {
+            "id": 1,
+            "nome": "Darron Nienow",
+            "valorUnitario": "100",
+            "quantidadeEstoque": "46",
+            "situacao": "d",
+            "created_at": "2019-07-02 20:31:45",
+            "updated_at": "2019-07-02 20:34:38"
+          },
+          {
+            "id": 2,
+            "nome": "Golda Yost IV",
+            "valorUnitario": "100",
+            "quantidadeEstoque": "50",
+            "situacao": "d",
+            "created_at": "2019-07-02 20:31:45",
+            "updated_at": "2019-07-02 20:31:45"
+          },
         ]
 
-### Create a New Question [POST]
-
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
+### Produto Criar [POST]
 
 + Request (application/json)
 
         {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
+            "nome": "Carne",
+            "valorUnitario": 100,
+            "quantidadeEstoque": 100,
+            "situacao": "d"
         }
 
 + Response 201 (application/json)
 
-    + Headers
+        {
+            "message": "Sucesso!",
+        }
 
-            Location: /questions/2
+## Produto [/api/produto/{id}]
 
-    + Body
+### Detalhar [GET]
 
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
-            }
++ Response 200 (application/json)
+
+        {
+            "nome": "Vegetal",
+            "valorUnitario": 50,
+            "quantidadeEstoque": 50,
+            "situacao": "d"
+        }
+
+### Atualizar [PUT]
+
++ Request (application/json)
+
+        {
+            "nome": "Vegetal",
+            "valorUnitario": 50,
+            "quantidadeEstoque": 50,
+            "situacao": "d"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "message": "Sucesso!",
+        }
+
+### Excluir [DELETE]
+
++ Request (application/json)
+
+        {
+            "nome": "Vegetal",
+            "valorUnitario": 50,
+            "quantidadeEstoque": 50,
+            "situacao": "d"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "message": "Excluido!",
+        }
+
+## Pedido [/api/pedido]
+
+### Pedido Listar [GET]
+
++ Response 200 (application/json)
+
+        [
+         {
+            "id": 1,
+            "nome": "Darron Nienow",
+            "valorUnitario": "100",
+            "quantidadeEstoque": "46",
+            "situacao": "d",
+            "created_at": "2019-07-02 20:31:45",
+            "updated_at": "2019-07-02 20:34:38"
+          },
+          {
+            "id": 2,
+            "nome": "Golda Yost IV",
+            "valorUnitario": "100",
+            "quantidadeEstoque": "50",
+            "situacao": "d",
+            "created_at": "2019-07-02 20:31:45",
+            "updated_at": "2019-07-02 20:31:45"
+          },
+        ]
+        
+### Pedido Criar [POST]
+
++ Request (application/json)
+
+        {
+            "nome": "Carne",
+            "valorUnitario": 100,
+            "quantidadeEstoque": 100,
+            "situacao": "d"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "message": "Sucesso!",
+        }
+
+## Pedido [/api/pedido/{id}]
+
+### Pedido Detalhar [GET]
+
++ Response 200 (application/json)
+
+        {
+            "nome": "Vegetal",
+            "valorUnitario": 50,
+            "quantidadeEstoque": 50,
+            "situacao": "d"
+        }
+
+### Pedido Atualizar [PUT]
+
++ Request (application/json)
+
+        {
+            "nome": "Vegetal",
+            "valorUnitario": 50,
+            "quantidadeEstoque": 50,
+            "situacao": "d"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "message": "Sucesso!",
+        }
+
+### Pedido Excluir [DELETE]
+
++ Request (application/json)
+
+        {
+            "nome": "Vegetal",
+            "valorUnitario": 50,
+            "quantidadeEstoque": 50,
+            "situacao": "d"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "message": "Excluido!",
+        }
