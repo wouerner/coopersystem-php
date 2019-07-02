@@ -16,6 +16,14 @@ class PedidoController extends Controller
 
     public function store(Request $request)
     {
+        foreach($request->produtos as $produtoId => $produto) {
+            if ($this->existeEstoque($produtoId)) {
+                continue;
+            } else {
+                return 'Não existe estoque';
+            }
+        }
+
         $pedido = new Pedido;
 
         $pedido->solicitante = $request->solicitante;
@@ -26,7 +34,6 @@ class PedidoController extends Controller
         $id = $pedido->save();
 
         $this->insertProdutos($request->produtos, $pedido->id);
-
     }
 
     public function show($id)
@@ -62,14 +69,17 @@ class PedidoController extends Controller
 
     private function insertProdutos($produtos, $pedidoId) {
         foreach($produtos as $produtoId => $quantidade) {
-            $pedidoProduto = new PedidoProduto;
-            $pedidoProduto->pedido_id = $pedidoId;
-            $pedidoProduto->produto_id = $produtoId;
-            $pedidoProduto->quantidade = $quantidade;
+            if ($this->existeEstoque($produtoId)) {
 
-            $pedidoProduto->save();
+                $pedidoProduto = new PedidoProduto;
+                $pedidoProduto->pedido_id = $pedidoId;
+                $pedidoProduto->produto_id = $produtoId;
+                $pedidoProduto->quantidade = $quantidade;
 
-            $this->atualizarEstoque($produtoId, $quantidade);
+                $pedidoProduto->save();
+
+                $this->reduzirEstoque($produtoId, $quantidade);
+            }
         }
     }
 
@@ -82,10 +92,14 @@ class PedidoController extends Controller
         }
     }
 
-    private function atualizarEstoque($produtoId, $quantidade){
+    private function reduzirEstoque($produtoId, $quantidade) {
         $produto = Produto::findOrFail($produtoId);
 
         $produto->quantidadeEstoque = (int)$produto->quantidadeEstoque - (int)$quantidade;
+
+        if ($produto->quantidadeEstoque == 0 ) {
+            $produto->situacao = 'i';
+        }
 
         $produto->save();
     }
@@ -94,7 +108,14 @@ class PedidoController extends Controller
         $produto = Produto::findOrFail($produtoId);
 
         $produto->quantidadeEstoque = (int)$produto->quantidadeEstoque + (int)$quantidade;
+        $produto->situacao = 'd';
 
         $produto->save();
+    }
+
+    private function existeEstoque($produtoId) {
+        $produto = Produto::findOrFail($produtoId);
+
+        return (int)$produto->quantidadeEstoque == 0 ? false : true;
     }
 }
