@@ -20,6 +20,6 @@ $factory->define(PedidoProduto::class, function (Faker $faker) {
     return [
         'produto_id' => 1,
         'pedido_id' => 1,
-        'quantidade' => 50,
+        'quantidade' => 1,
     ];
 });
