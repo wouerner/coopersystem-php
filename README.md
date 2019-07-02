@@ -56,21 +56,26 @@ Dentro da pasta do projeto:
 cd coopersystem-php/
 chmod +x artisan
 ```
+
+Iniciando o banco de dados
+```
+docker-compose up
+```
+
 Instalando migrações e criando as tabelas:
 ```
 ./artisan migrate:install
 ./artisan migrate
 ```
-Iniciando o banco de dados
+
+Adicionando dados para a base de dados
 ```
-docker-compose up
+ ./artisan db:seed
 ```
+
 Iniciando a aplicação backend
 
 ```
 ./artisan serve
 ```
 Acessar no navegador: localhost:8000
-
-
-
