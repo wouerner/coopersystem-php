@@ -35,10 +35,10 @@ class PedidoController extends Controller
 
         $this->insertProdutos($request->produtos, $pedido->id);
 
-        return response()->json([
-            'message' => 'Sucesso!',
-            200
-        ]);
+        return response()->json(
+            ['message' => 'Sucesso!'],
+            201
+        );
     }
 
     public function show($id)
@@ -60,6 +60,11 @@ class PedidoController extends Controller
         $this->deleteProdutos($pedido->id);
 
         $this->insertProdutos($request->produtos, $pedido->id);
+
+        return response()->json(
+            ['message' => 'Sucesso!'],
+            200
+        );
     }
 
     public function destroy($id)
